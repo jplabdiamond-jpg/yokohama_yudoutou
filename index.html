@@ -138,7 +138,14 @@
   /* steps */
   .steps{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
   .steps .s{text-align:center;background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 8px}
-  .steps .ic{font-size:26px;margin-bottom:6px}
+  .steps .ic{width:52px;height:52px;margin:0 auto 8px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(circle at 50% 40%,#0c2233,#071018);
+    border:1px solid rgba(34,224,255,.35);
+    box-shadow:0 0 12px rgba(34,224,255,.35),inset 0 0 10px rgba(34,224,255,.18)}
+  .steps .ic svg{width:26px;height:26px;display:block}
+  .steps .ic svg *{stroke:#3fe9ff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;fill:none;
+    filter:drop-shadow(0 0 3px #22e0ff) drop-shadow(0 0 6px rgba(34,224,255,.7))}
   .steps .n{font-size:11px;color:var(--acc);font-weight:900;letter-spacing:.05em}
   .steps .t{font-size:13px;color:var(--navy);font-weight:700;margin-top:4px}
   @media(max-width:760px){.steps{grid-template-columns:1fr 1fr 1fr}}
@@ -308,11 +315,11 @@
     </div>
     <div class="subttl">お問い合わせから報告書まで（すべて当社担当）</div>
     <div class="steps">
-      <div class="s"><div class="ic">📞</div><div class="n">STEP 01</div><div class="t">お問い合わせ・現地調査</div></div>
-      <div class="s"><div class="ic">📝</div><div class="n">STEP 02</div><div class="t">お見積り</div></div>
-      <div class="s"><div class="ic">📅</div><div class="n">STEP 03</div><div class="t">ご発注・日程調整</div></div>
-      <div class="s"><div class="ic">🔧</div><div class="n">STEP 04</div><div class="t">交換・工事</div></div>
-      <div class="s"><div class="ic">📋</div><div class="n">STEP 05</div><div class="t">是正・報告書のお渡し</div></div>
+      <div class="s"><div class="ic"><svg viewBox="0 0 24 24"><path d="M6.5 3h-3A1.5 1.5 0 0 0 2 4.6C2 13 11 22 19.4 22a1.5 1.5 0 0 0 1.6-1.5v-3a1.5 1.5 0 0 0-1.3-1.5l-3-.4a1.5 1.5 0 0 0-1.3.5l-1 1a13 13 0 0 1-5-5l1-1a1.5 1.5 0 0 0 .5-1.4l-.4-3A1.5 1.5 0 0 0 6.5 3Z"/></svg></div><div class="n">STEP 01</div><div class="t">お問い合わせ・現地調査</div></div>
+      <div class="s"><div class="ic"><svg viewBox="0 0 24 24"><path d="M5 3h9l5 5v13H5z"/><path d="M14 3v5h5"/><path d="M8 13h8"/><path d="M8 17h6"/></svg></div><div class="n">STEP 02</div><div class="t">お見積り</div></div>
+      <div class="s"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M8 3v4"/><path d="M16 3v4"/><path d="M9 14l2 2 4-4"/></svg></div><div class="n">STEP 03</div><div class="t">ご発注・日程調整</div></div>
+      <div class="s"><div class="ic"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.2L3 17.8 6.2 21l6.3-6.3a4 4 0 0 0 5.2-5.4l-2.7 2.7-2.3-2.3z"/></svg></div><div class="n">STEP 04</div><div class="t">交換・工事</div></div>
+      <div class="s"><div class="ic"><svg viewBox="0 0 24 24"><path d="M9 4h6v3H9z"/><path d="M15 5h3v16H6V5h3"/><path d="M9 13l2 2 4-4"/></svg></div><div class="n">STEP 05</div><div class="t">是正・報告書のお渡し</div></div>
     </div>
   </div>
 </section>
