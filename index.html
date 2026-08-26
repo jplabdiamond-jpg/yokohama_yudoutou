@@ -201,6 +201,72 @@
   footer{background:var(--navy);color:#c7d6e6;text-align:center;padding:28px 20px;font-size:12.5px;line-height:1.9}
   footer a{color:#cfe0f0}
   .note{background:#eef7f1;border:1px solid #a9d6bf;border-left:5px solid var(--green);border-radius:8px;padding:12px 16px;font-size:12.5px;color:#1a6b4a;margin-top:22px}
+
+  /* ===== モーション（/emergency-light/ を参考にした動きのあるページ） ===== */
+  /* スクロールリベール：画面に入ると下からふわっと出現 */
+  [data-reveal]{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.22,.61,.36,1),transform .8s cubic-bezier(.22,.61,.36,1)}
+  [data-reveal].in{opacity:1;transform:none}
+  [data-reveal="left"]{transform:translateX(-34px)}
+  [data-reveal="right"]{transform:translateX(34px)}
+  [data-reveal="zoom"]{transform:scale(.92)}
+  [data-reveal="left"].in,[data-reveal="right"].in,[data-reveal="zoom"].in{transform:none}
+  /* カードの連続リベール（stagger） */
+  [data-stagger]>*{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s ease}
+  [data-stagger].in>*{opacity:1;transform:none}
+  [data-stagger].in>*:nth-child(1){transition-delay:.05s}
+  [data-stagger].in>*:nth-child(2){transition-delay:.13s}
+  [data-stagger].in>*:nth-child(3){transition-delay:.21s}
+  [data-stagger].in>*:nth-child(4){transition-delay:.29s}
+  [data-stagger].in>*:nth-child(5){transition-delay:.37s}
+  [data-stagger].in>*:nth-child(6){transition-delay:.45s}
+
+  /* 見出しの下線ドロー */
+  h2.sec{position:relative;padding-bottom:14px}
+  h2.sec::after{content:"";position:absolute;left:50%;bottom:0;transform:translateX(-50%);
+    width:0;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--blue),var(--acc));transition:width .7s ease .15s}
+  h2.sec.in::after{width:64px}
+
+  /* ヒーロー入場アニメ */
+  .hero .kk{opacity:0;animation:heroUp .8s ease .2s forwards}
+  .hero h1{opacity:0;animation:heroUp .9s ease .38s forwards}
+  .hero .sub{opacity:0;animation:heroUp .9s ease .58s forwards}
+  .hero .cta{opacity:0;animation:heroUp .9s ease .78s forwards}
+  @keyframes heroUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+  /* ヒーロー背景のゆっくりズーム＋スクロールでほんのりパララックス感 */
+  .hero .bg{animation:heroZoom 18s ease-in-out infinite alternate}
+  @keyframes heroZoom{from{transform:scale(1)}to{transform:scale(1.08)}}
+  /* ヒーローのハイライト語をネオン点滅 */
+  .hero h1 span{animation:neonGlow 3.2s ease-in-out infinite}
+  @keyframes neonGlow{
+    0%,100%{text-shadow:0 0 8px rgba(255,210,122,.55),0 0 20px rgba(255,210,122,.35)}
+    45%{text-shadow:0 0 4px rgba(255,210,122,.35)}
+    50%{text-shadow:0 0 14px rgba(255,210,122,.85),0 0 34px rgba(255,210,122,.6)}
+  }
+
+  /* カード類のホバー浮き上がり（動きを強調） */
+  .svc .cell,.uses .u,.steps .s{transition:transform .22s ease,box-shadow .22s ease}
+  .svc .cell:hover,.uses .u:hover{transform:translateY(-6px);box-shadow:0 14px 30px rgba(20,40,60,.16)}
+  .svc .cell:hover img,.uses .u:hover img{transform:scale(1.06)}
+  .svc .thumb img,.uses .thumb img{transition:transform .5s ease}
+  .steps .s:hover{transform:translateY(-5px);box-shadow:0 12px 26px rgba(26,95,158,.18)}
+  /* STEPアイコンをふわ浮遊 */
+  .steps .ic{animation:floaty 3.4s ease-in-out infinite}
+  .steps .s:nth-child(2) .ic{animation-delay:.3s}
+  .steps .s:nth-child(3) .ic{animation-delay:.6s}
+  .steps .s:nth-child(4) .ic{animation-delay:.9s}
+  .steps .s:nth-child(5) .ic{animation-delay:1.2s}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+  /* ヘッダーの電話番号を軽く鼓動 */
+  header .htel{animation:pulseTel 2.6s ease-in-out infinite}
+  @keyframes pulseTel{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+
+  /* モーション低減設定を尊重 */
+  @media(prefers-reduced-motion:reduce){
+    [data-reveal],[data-stagger]>*{opacity:1!important;transform:none!important;transition:none!important}
+    .hero .kk,.hero h1,.hero .sub,.hero .cta{opacity:1;animation:none}
+    .hero .bg,.hero h1 span,.steps .ic,header .htel,h2.sec::after{animation:none}
+    h2.sec.in::after{width:64px}
+  }
 </style>
 </head>
 <body>
@@ -404,5 +470,38 @@
   ※本ページは構成デモです（想定URL：/guide-light/）
 </footer>
 
+<script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // 章見出しはドロー下線、その他コンテンツはリベール対象に自動指定
+  document.querySelectorAll('h2.sec').forEach(function(h){ h.setAttribute('data-reveal',''); });
+  // 各セクション内の主要ブロックをリベール（ヒーローは独自アニメなので除外）
+  document.querySelectorAll('section:not(.hero) .wrap > *').forEach(function(el){
+    if(el.tagName==='H2' || el.classList.contains('en')) return;
+    if(!el.hasAttribute('data-reveal')) el.setAttribute('data-reveal','');
+  });
+  // カードグリッドは stagger（連続出現）に
+  ['.checks','.svc','.uses','.steps','.defrow','.works','.cols2','.strong','.faq','.panel-cta .cta'].forEach(function(sel){
+    document.querySelectorAll(sel).forEach(function(g){
+      g.removeAttribute('data-reveal');
+      g.setAttribute('data-stagger','');
+    });
+  });
+
+  if(reduce){
+    document.querySelectorAll('[data-reveal],[data-stagger],h2.sec').forEach(function(el){ el.classList.add('in'); });
+    return;
+  }
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+
+  document.querySelectorAll('[data-reveal],[data-stagger]').forEach(function(el){ io.observe(el); });
+})();
+</script>
 </body>
 </html>
