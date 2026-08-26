@@ -281,6 +281,29 @@
     .hero .bg,.hero h1 span,.steps .ic,header .htel,h2.sec::after{animation:none}
     h2.sec.in::after{width:64px}
   }
+
+  /* ===== モバイル最適化：CTAボタン統一＆比較表の可読性 ===== */
+  /* CTAボタンのラベルは中央寄せ（電話/問い合わせで幅がぶれないよう） */
+  .btn.tel,.btn.line,.btn.ghost{justify-content:center;text-align:center}
+  @media(max-width:640px){
+    /* 3か所のCTA（ヒーロー／是正／最終）を中央揃え・同じ幅の縦並びに */
+    .hero .cta,.panel-cta .cta,.final .cta{flex-direction:column;align-items:center;gap:12px}
+    .hero .cta .btn,.panel-cta .cta .btn,.final .cta .btn{
+      width:100%;max-width:340px;box-sizing:border-box;padding-left:16px;padding-right:16px;font-size:16px}
+  }
+
+  /* 比較表：モバイルで改行が減るよう詰めて表示 */
+  @media(max-width:720px){
+    table.cmp{font-size:13px;table-layout:fixed}
+    .cmp th,.cmp td{padding:9px 8px;word-break:normal;overflow-wrap:anywhere;line-height:1.45}
+    .cmp thead th:nth-child(1){width:22%}
+    .cmp th:nth-child(2),.cmp th:nth-child(3),
+    .cmp td:nth-child(2),.cmp td:nth-child(3){width:39%}
+  }
+  @media(max-width:400px){
+    table.cmp{font-size:12px}
+    .cmp th,.cmp td{padding:8px 6px}
+  }
 </style>
 </head>
 <body>
