@@ -206,7 +206,13 @@
     -webkit-mask-image:linear-gradient(to bottom,#000 50%,rgba(0,0,0,.5) 72%,transparent 100%);
     mask-image:linear-gradient(to bottom,#000 50%,rgba(0,0,0,.5) 72%,transparent 100%);
     animation:personFloat 5s ease-in-out infinite}
-  @media(max-width:820px){.final .worker{display:none}}
+  @media(max-width:820px){
+    /* モバイルは人物を絶対配置→通常フローに切替え、コンテンツ最後に中央表示 */
+    .final{display:flex;flex-direction:column;align-items:stretch}
+    .final .worker{position:static;order:99;width:200px;margin:6px auto 0;transform:translateY(24px)}
+    .final.in .worker{transform:none}
+    .final .form{order:98}
+  }
   .final h3{font-size:clamp(19px,3.4vw,26px);font-weight:900;margin-bottom:8px}
   .final p{color:#dbe8f5;margin-bottom:22px}
   .final .cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
